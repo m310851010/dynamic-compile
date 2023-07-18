@@ -1,0 +1,63 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "app/**/*", // ignore nodeJs files
+    "dist/**/*",
+    "release/**/*"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": [
+          "./projects/dynamic-compile/tsconfig.lib.json",
+          "./projects/dynamic-compile/tsconfig.lib.prod.json",
+          "./projects/dynamic-compile/tsconfig.spec.json",
+          "./projects/dynamic-compile-demo/tsconfig.app.json",
+          "./projects/dynamic-compile-demo/tsconfig.spec.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/ng-cli-compat",
+        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {
+        "prefer-arrow/prefer-arrow-functions": 0,
+        "@angular-eslint/directive-selector": 0,
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "ng",
+            "style": "kebab-case"
+          },
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@typescript-eslint/naming-convention": 0,
+        "@angular-eslint/no-host-metadata-property": 0,
+        "no-underscore-dangle": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    },
+    {
+      "files": ["*.html"],
+      "excludedFiles": ["*inline-template-*.component.html"],
+      "extends": ["plugin:prettier/recommended"],
+      "rules": {
+        // NOTE: WE ARE OVERRIDING THE DEFAULT CONFIG TO ALWAYS SET THE PARSER TO ANGULAR (SEE BELOW)
+        "prettier/prettier": ["error", { "parser": "angular" }]
+      }
+    }
+  ]
+}

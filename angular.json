@@ -1,0 +1,130 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "dynamic-compile": {
+      "projectType": "library",
+      "root": "projects/dynamic-compile",
+      "sourceRoot": "projects/dynamic-compile/src",
+      "prefix": "ng",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/dynamic-compile/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dynamic-compile/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/dynamic-compile/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/dynamic-compile/src/test.ts",
+            "tsConfig": "projects/dynamic-compile/tsconfig.spec.json",
+            "karmaConfig": "projects/dynamic-compile/karma.conf.js"
+          }
+        }
+      }
+    },
+    "dynamic-compile-demo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/dynamic-compile-demo",
+      "sourceRoot": "projects/dynamic-compile-demo/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/dynamic-compile-demo",
+            "index": "projects/dynamic-compile-demo/src/index.html",
+            "main": "projects/dynamic-compile-demo/src/main.ts",
+            "polyfills": "projects/dynamic-compile-demo/src/polyfills.ts",
+            "tsConfig": "projects/dynamic-compile-demo/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "aot": false,
+            "assets": ["projects/dynamic-compile-demo/src/favicon.ico", "projects/dynamic-compile-demo/src/assets"],
+            "styles": ["projects/dynamic-compile-demo/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/dynamic-compile-demo/src/environments/environment.ts",
+                  "with": "projects/dynamic-compile-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "dynamic-compile-demo:build:production"
+            },
+            "development": {
+              "browserTarget": "dynamic-compile-demo:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "dynamic-compile-demo:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/dynamic-compile-demo/src/test.ts",
+            "polyfills": "projects/dynamic-compile-demo/src/polyfills.ts",
+            "tsConfig": "projects/dynamic-compile-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/dynamic-compile-demo/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": ["projects/dynamic-compile-demo/src/favicon.ico", "projects/dynamic-compile-demo/src/assets"],
+            "styles": ["projects/dynamic-compile-demo/src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "dynamic-compile-demo"
+}

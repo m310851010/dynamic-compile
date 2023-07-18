@@ -1,0 +1,33 @@
+{
+  "name": "@xmagic/dynamic-compile",
+  "version": "13.0.0",
+  "description": "把字符串动态编译成`angular`组件",
+  "author": "m310851010",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m310851010/dynamic-compile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m310851010/dynamic-compile/issues"
+  },
+  "homepage": "https://github.com/m310851010/dynamic-compile",
+  "keywords": [
+    "angular",
+    "angular13",
+    "angular14",
+    "html",
+    "dynamic",
+    "compile",
+    "jit",
+    "dynamic-compile"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": ">=13.0.0",
+    "@angular/core": ">=13.0.0"
+  },
+  "engines": {
+    "node": ">=12.13.0"
+  }
+}
